@@ -1353,6 +1353,17 @@
 </footer>
 
 <script>
+  // iframe高さ通知（STUDIO埋め込み対応）
+  function notifyHeight() {
+    const h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'lpHeight', height: h }, '*');
+  }
+  window.addEventListener('load', notifyHeight);
+  window.addEventListener('resize', notifyHeight);
+  // フォントや画像の読み込み完了後にも再送
+  setTimeout(notifyHeight, 800);
+  setTimeout(notifyHeight, 2000);
+
   // Scroll animation
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(el => {
